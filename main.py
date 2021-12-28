@@ -7,6 +7,7 @@ sys.path.append(os.path.join(parent_folder_path, 'lib'))
 sys.path.append(os.path.join(parent_folder_path, 'plugin'))
 
 from flowlauncher import FlowLauncher
+import webbrowser
 
 
 class HelloWorld(FlowLauncher):
@@ -15,11 +16,11 @@ class HelloWorld(FlowLauncher):
         return [
             {
                 "Title": "Hello World, this is where title goes. {}".format(('Your query is: ' + query , query)[query == '']),
-                "SubTitle": "This is where your subtitle goes",
+                "SubTitle": "This is where your subtitle goes, press enter to open Flow's url",
                 "IcoPath": "Images/app.png",
                 "JsonRPCAction": {
-                    "method": "do_something_for_query",
-                    "parameters": [param1, param2]
+                    "method": "open_url",
+                    "parameters": ["https://github.com/Flow-Launcher/Flow.Launcher"]
                 }
             }
         ]
@@ -27,14 +28,18 @@ class HelloWorld(FlowLauncher):
     def context_menu(self, data):
         return [
             {
-                "Title": "Context menu entry",
-                "SubTitle": "Data: {}".format(data),
-                "IcoPath": "Images/app.ico",
+                "Title": "Hello World Python's Context menu",
+                "SubTitle": "Press enter to open Flow the plugin's repo in GitHub",
+                "IcoPath": "Images/app.png",
+                "JsonRPCAction": {
+                    "method": "open_url",
+                    "parameters": ["https://github.com/Flow-Launcher/Flow.Launcher.Plugin.HelloWorldPython"]
+                }
             }
         ]
 
-    def do_something_for_query(self, param1, param2):
-        pass
+    def open_url(self, url):
+        webbrowser.open(url)
 
 if __name__ == "__main__":
     HelloWorld()
